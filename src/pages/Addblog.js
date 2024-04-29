@@ -175,13 +175,13 @@ const Addblog = () => {
             {imgState?.map((i, j) => {
               return (
                 <div className=" position-relative" key={j}>
-                  <button
+                  {/* <button
                     type="button"
                     onClick={() => dispatch(delImg(i.public_id))}
                     className="btn-close position-absolute"
                     style={{ top: "10px", right: "10px" }}
-                  ></button>
-                  <img src={i.url} alt="" width={200} height={200} />
+                  ></button> */}
+                  <img src={`http://localhost:5000/public/${i}`} alt="" width={200} height={200} />
                 </div>
               );
             })}

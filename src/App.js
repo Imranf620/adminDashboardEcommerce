@@ -24,13 +24,19 @@ import Couponlist from "./pages/Couponlist";
 import AddCoupon from "./pages/AddCoupon";
 import ViewEnq from "./pages/ViewEnq";
 import ViewOrder from "./pages/ViewOrder";
+import { useNavigate } from "react-router-dom";
+
 function App() {
+  const user_ = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+  let token = user_ ? user_.token : null;
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/reset-password" element={<Resetpassword />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
+
         <Route path="/admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="enquiries" element={<Enquiries />} />

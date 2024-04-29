@@ -46,6 +46,7 @@ const Addproduct = () => {
   const imgState = useSelector((state) => state.upload.images);
   const newProduct = useSelector((state) => state.product);
   const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+  console.log({ imgState })
   useEffect(() => {
     if (isSuccess && createdProduct) {
       toast.success("Product Added Successfullly!");
@@ -64,8 +65,8 @@ const Addproduct = () => {
   const img = [];
   imgState.forEach((i) => {
     img.push({
-      public_id: i.public_id,
-      url: i.url,
+      public_id: Date.now(),
+      url: i,
     });
   });
 
@@ -242,13 +243,13 @@ const Addproduct = () => {
             {imgState?.map((i, j) => {
               return (
                 <div className=" position-relative" key={j}>
-                  <button
+                  {/* <button
                     type="button"
-                    onClick={() => dispatch(delImg(i.public_id))}
+                    // onClick={() => dispatch(delImg(i.public_id))}
                     className="btn-close position-absolute"
                     style={{ top: "10px", right: "10px" }}
-                  ></button>
-                  <img src={i.url} alt="" width={200} height={200} />
+                  ></button> */}
+                  <img src={`http://localhost:5000/public/${i}`} alt="" width={200} height={200} />
                 </div>
               );
             })}

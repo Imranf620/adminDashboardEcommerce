@@ -26,10 +26,6 @@ const columns = [
     sorter: (a, b) => a.category.length - b.category.length,
   },
   {
-    title: "Color",
-    dataIndex: "color",
-  },
-  {
     title: "Price",
     dataIndex: "price",
     sorter: (a, b) => a.price - b.price,
@@ -45,23 +41,26 @@ const Productlist = () => {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
+  const handledeleteProduct = () => {
+    console.log("click button");
+  }
   const productState = useSelector((state) => state.product.products);
   const data1 = [];
+  console.log({ productState })
   for (let i = 0; i < productState.length; i++) {
     data1.push({
       key: i + 1,
       title: productState[i].title,
       brand: productState[i].brand,
       category: productState[i].category,
-      color: productState[i].color,
       price: `${productState[i].price}`,
       action: (
         <>
           <Link to="/" className=" fs-3 text-danger">
             <BiEdit />
           </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
-            <AiFillDelete />
+          <Link className="ms-3 fs-3 text-danger">
+            <AiFillDelete onClick={handledeleteProduct} />
           </Link>
         </>
       ),

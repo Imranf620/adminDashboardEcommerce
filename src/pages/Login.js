@@ -29,8 +29,13 @@ const Login = () => {
   const authState = useSelector((state) => state);
 
   const { user, isError, isSuccess, isLoading, message } = authState.auth;
-
+  const user_ = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+  let token = user_ ? user_.token : null;
+  if (token) {
+    navigate("admin");
+  }
   useEffect(() => {
+
     if (isSuccess) {
       navigate("admin");
     } else {

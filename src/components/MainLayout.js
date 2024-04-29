@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
@@ -21,10 +21,25 @@ import { useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+  useEffect(() => {
+    const user_ = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+    const token = user_ ? user_.token : null;
+    if (!token) {
+      // If token does not exist, navigate to the root ("/") route
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const logoutfunction = () => {
+    localStorage.clear();
+    window.location.href = "/";
+    console.log("logout");
+  }
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -90,16 +105,16 @@ const MainLayout = () => {
                   icon: <BiCategoryAlt className="fs-4" />,
                   label: "Category List",
                 },
-                {
-                  key: "color",
-                  icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color",
-                },
-                {
-                  key: "list-color",
-                  icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color List",
-                },
+                // {
+                //   key: "color",
+                //   icon: <AiOutlineBgColors className="fs-4" />,
+                //   label: "Color",
+                // },
+                // {
+                //   key: "list-color",
+                //   icon: <AiOutlineBgColors className="fs-4" />,
+                //   label: "Color List",
+                // },
               ],
             },
             {
@@ -197,8 +212,8 @@ const MainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">Navdeep</h5>
-                <p className="mb-0">navdeepdahiya753@gmail.com</p>
+                <h5 className="mb-0">John</h5>
+                <p className="mb-0">john.doe@example.com</p>
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
@@ -211,13 +226,13 @@ const MainLayout = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
+                  <button
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
+                    onClick={logoutfunction}
                   >
                     Signout
-                  </Link>
+                  </button>
                 </li>
               </div>
             </div>
